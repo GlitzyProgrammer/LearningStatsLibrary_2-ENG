@@ -4,14 +4,14 @@ import numpy as np
 import statsmodels.api as sm
 
 
-# I didn't manually calualte much I based it all off the model.summary 
+# I didn't manually calculate much I based it all off the model.summary  from the statsmodels.api
+
 anova_regression= {
     "df":[],	
     "SS":[],
         "MS":[],	
         "F":[],	
         "Significance F":[]
-
 }
 df = pd.read_excel(r"C:\Users\ljwil\Desktop\Intro STATS\Project Stats 2\Chapter 13\Practice Portfolio 13 Data-3.xlsx",sheet_name="Regression")
 
@@ -42,6 +42,7 @@ residuals = model.resid
 rse = np.sqrt(np.sum(residuals**2) / (len(df) - 2))  #residual standard error (RSE)
 num_observations = model.nobs   #number of observations
 
+#R Stastastic summary
 Regression_Summary = {
     "Multiple R":[multiple_r],
 "R Square":[multiple_r_squared],
@@ -55,9 +56,11 @@ Regression_Summary_df.columns = label_regression
 print("Regression Stastisic Summary")
 print(Regression_Summary_df)
 print("\n\n")
-y_mean = df['Number of Blues, y_i'].mean()
-#Regression section
 
+
+
+#Regression section
+y_mean = df['Number of Blues, y_i'].mean()
 predicted_values = model.predict(X)
 ssr = np.sum((predicted_values - y_mean)**2)
 df_regression = len(model.params) - 1
@@ -69,6 +72,7 @@ anova_regression['SS'].append(ssr)
 anova_regression['MS'].append(msr)
 anova_regression['F'].append(f_statistic)
 anova_regression['Significance F'].append(f_signficant)
+
 #Resduual section
 sse = np.sum(residuals**2)
 mse = sse / (len(df) - len(model.params))
@@ -80,7 +84,7 @@ anova_regression['F'].append(np.nan)
 anova_regression['Significance F'].append(np.nan)
 
 
-#Total sectiion
+#Total section
 total_obs = df_regression+df_residual
 sst = np.sum((df['Number of Blues, y_i'] - y_mean)**2)
 anova_regression['df'].append(total_obs)
@@ -93,6 +97,8 @@ anova_regression_df = pd.DataFrame(anova_regression,index=label_anova)
 print("Anova Summary")
 print(anova_regression_df)
 
+
+#Creating Intercept Table 
 intercept_table = model.summary2().tables[1]
 
 intercept_table_df =pd.DataFrame(intercept_table)
@@ -104,6 +110,7 @@ coef_table = model.conf_int(alpha=0.05)
 # Add the coefficient values to the table
 coef_table['Coefficient'] = model.params
 print("\n\n")
+#Adds the other two columns towards the intercept table pulled from the model.summary
 intercept_table['Lower 95.0%'] = [ci_table.loc[0][0],coef_table.iloc[1][0]]
 intercept_table['Upper 95.0%'] = [ci_table.loc[1][0],coef_table.iloc[1][1]]
 print("\n\n")
