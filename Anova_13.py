@@ -1,10 +1,8 @@
 
 import pandas as pd 
 import matplotlib.pyplot as plt
-import seaborn as sns  # for heatmap styling
 import numpy as np
 from scipy.stats import t
-import numpy as np
 from scipy.stats import f_oneway
 from sklearn.metrics import mean_squared_error
 import itertools
@@ -133,8 +131,8 @@ BlueRegularvsPeanut,BlueRegularvsPB,BluePeanutvsPB):
 #print("Orginal Data Frame \n")
 df = pd.read_excel(r"C:\Users\ljwil\Desktop\Intro STATS\Project Stats 2\Chapter 13\Practice Portfolio 13 Data-3.xlsx",sheet_name="ANOVA",header=1)
 # Setting header to 1 as keeping it as it was made itterating impossible
-# Also seeting appart the two tables in the dataframe into 2 other data frames will make programing this easier
-#print("Data Fame 'Split' into two different ones\n")
+# Also setting appart the two tables in the dataframe into 2 other data frames will make programming this easier
+
 Number_of_MnMs = {
     "Regular": [],
     "Peanut": [],
@@ -205,12 +203,6 @@ for index, row in df.iterrows():
 
 Number_Anova = pd.DataFrame(Number_of_MnMs)
 Blue_Anova =  pd.DataFrame(Blue_MnMs)
-
-#print("Number of MnMs\n")
-#print(Number_Anova)
-#print("\n")
-#print("Blue MnMs Data\n")
-#print(Blue_Anova)
 
 Num_Reg = Number_Anova.loc[:, 'Regular']
 Num_Reg_dev = np.std(Num_Reg)           #caluating standard deviation 
@@ -458,9 +450,7 @@ print("Fisher's LSD multiple comparison test on the Blue Mnms\n")
 print(Blue_Anova_table)
 print("\n")
 print(f"An analysis of variance showed that the effect of the number of blue mnms was significant,F(2,75) = {round(Anova_blue_sum_df.iat[0,3],3)} and p < 0.001. Post hoc analyses using Fisher's LSD indicated that the amount of Blue MnMs in peanut MnMs were significantly higher (M = {Blue_Summary_df.iat[1,2]}, SD =  {round(Blue_Summary_df.iat[1,4],3)})  compared to  Regular MnMs (M = {Blue_Summary_df.iat[0,2]}, SD = {round(Blue_Summary_df.iat[0,4],3)}) and  Peanut Butter(M = {Blue_Summary_df.iat[2,2]}, SD ={round(Blue_Summary_df.iat[2,4],3)} ")
-#print(Number_Summary)
-#print("\n")
-#print(Blue_Summary)
+
 
 categories = ['Regular',"Peanut","PB"]
 num_means = [Num_Reg_mean,Num_Peanut_mean,Num_PB_mean]
