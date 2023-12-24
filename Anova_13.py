@@ -9,7 +9,7 @@ import itertools
 from scipy.stats import f
 
 
-
+#This functions handles the pairwise calculation for the number of mnm data set
 def pairwise_caluation_num(Num_Reg,Num_Peanut,Num_PB,desired_alpha,
 RegularvsPeanut,RegularvsPB,PeanutvsPB):
      Number_array = [Num_Reg, Num_Peanut,Num_PB]
@@ -69,7 +69,7 @@ RegularvsPeanut,RegularvsPB,PeanutvsPB):
                   PeanutvsPB["Yes/No"].append("No")
                   continue
     
-    
+#This functions handles the pairwise calculation for the number of blue MnMs data set
 def pairwise_caluation_blue(Blue_Reg,Blue_Peanuts,Blue_PB,desired_alpha,
 BlueRegularvsPeanut,BlueRegularvsPB,BluePeanutvsPB):
      Number_array = [Blue_Reg, Blue_Peanuts,Blue_PB]
@@ -133,6 +133,7 @@ df = pd.read_excel(r"C:\Users\ljwil\Desktop\Intro STATS\Project Stats 2\Chapter 
 # Setting header to 1 as keeping it as it was made itterating impossible
 # Also setting appart the two tables in the dataframe into 2 other data frames will make programming this easier
 
+
 Number_of_MnMs = {
     "Regular": [],
     "Peanut": [],
@@ -191,7 +192,7 @@ PeanutvsPB =  {
 
 }
 
-
+#This iterates through the index to access the row data for each table in the data set and places them in the dictionaries used later for dataframes
 for index, row in df.iterrows():
     Number_of_MnMs["Regular"].append(row["Regular"])
     Number_of_MnMs["Peanut"].append(row['Peanut'])
@@ -204,6 +205,7 @@ for index, row in df.iterrows():
 Number_Anova = pd.DataFrame(Number_of_MnMs)
 Blue_Anova =  pd.DataFrame(Blue_MnMs)
 
+#This makes a summary of the data from the two tables and saves them for later to be used in dictionaires
 Num_Reg = Number_Anova.loc[:, 'Regular']
 Num_Reg_dev = np.std(Num_Reg)           #caluating standard deviation 
 Num_Reg_var = np.var(Num_Reg)           #caluating variance
@@ -249,21 +251,21 @@ Blue_PB_count =len(Blue_PB)
 
 desired_alpha = 0.05 
 Bonferroni_Correction =desired_alpha/3 #3 representing the number of categories 
-dfw = len(Num_Reg) + len(Num_Peanut) + len(Num_PB) - 3  #df equals 72
+dfw = len(Num_Reg) + len(Num_Peanut) + len(Num_PB) - 3  #dfw equals 72
 
 
 pairwise_caluation_num(Num_Reg,Num_Peanut,Num_PB,desired_alpha,RegularvsPeanut,RegularvsPB,PeanutvsPB)
 pairwise_caluation_blue(Blue_Reg,Blue_Peanuts,Blue_PB,desired_alpha,BlueRegularvsPeanut,BlueRegularvsPB,BluePeanutvsPB)
 
-data_nummnms = {"Regular vs Peanuts":RegularvsPeanut,
+data_numMnMs = {"Regular vs Peanuts":RegularvsPeanut,
              "Regular vs PB":RegularvsPB,
              "Peanut vs PB":PeanutvsPB}
-data_bluemnms = {"Regular vs Peanuts":BlueRegularvsPeanut,
+data_blueMnMs = {"Regular vs Peanuts":BlueRegularvsPeanut,
              "Regular vs PB":BlueRegularvsPB,
              "Peanut vs PB":BluePeanutvsPB}
 
-Numb_Anova_table =  pd.DataFrame(data_nummnms).transpose()  # contains the first table for Number of Mnms for anova caluations
-Blue_Anova_table =  pd.DataFrame(data_bluemnms).transpose()  # contains the first table for Blue Mnms for anova caluations
+Numb_Anova_table =  pd.DataFrame(data_numMnMs).transpose()  # contains the first table for Number of Mnms for anova caluations
+Blue_Anova_table =  pd.DataFrame(data_blueMnMs).transpose()  # contains the second table for Blue Mnms for anova caluations
 
 Number_Summary = {
    "Regular": [Num_Reg_count,Num_Reg_sum,Num_Reg_mean,Num_Reg_var,Num_Reg_dev],
@@ -293,6 +295,7 @@ Number_Summary_df.columns = labels
 Blue_Summary_df = pd.DataFrame(Blue_Summary).transpose()
 Blue_Summary_df.columns = labels
 
+#Anova Summary table creation  for number of MnMs
 
 # Combine all data into one array
 all_data = np.concatenate([Num_Reg, Num_Peanut, Num_PB])
@@ -354,11 +357,13 @@ Anova_Number_Summary["Total"].append(np.nan)
 Anova_Number_Summary["Total"].append(np.nan)
 Anova_Number_Summary["Total"].append(np.nan)
 Anova_Number_Summary["Total"].append(np.nan)
-#print(Anova_Number_Summary["Total"])
+
+
 Anova_num_sum_df = pd.DataFrame(Anova_Number_Summary).transpose()
 labels_Anovas = ['SS','df','MS','F','p-value','F Critical']
 Anova_num_sum_df.columns = labels_Anovas
 
+#Anova Summary table creation  for number of blue MnMs
 # Combine all data into one array
 all_data = np.concatenate([Blue_Reg, Blue_Peanuts, Blue_PB])
 
@@ -423,6 +428,7 @@ Anova_Blue_Summary["Total"].append(np.nan)
 
 Anova_blue_sum_df = pd.DataFrame(Anova_Blue_Summary).transpose()
 Anova_blue_sum_df.columns = labels_Anovas
+
 print("SECTION NUMBER OF MNM\n\n")
 print("Summary of Number of MnMs\n")
 print(Number_Summary_df)
@@ -449,9 +455,9 @@ print("\n")
 print("Fisher's LSD multiple comparison test on the Blue Mnms\n")
 print(Blue_Anova_table)
 print("\n")
-print(f"An analysis of variance showed that the effect of the number of blue mnms was significant,F(2,75) = {round(Anova_blue_sum_df.iat[0,3],3)} and p < 0.001. Post hoc analyses using Fisher's LSD indicated that the amount of Blue MnMs in peanut MnMs were significantly higher (M = {Blue_Summary_df.iat[1,2]}, SD =  {round(Blue_Summary_df.iat[1,4],3)})  compared to  Regular MnMs (M = {Blue_Summary_df.iat[0,2]}, SD = {round(Blue_Summary_df.iat[0,4],3)}) and  Peanut Butter(M = {Blue_Summary_df.iat[2,2]}, SD ={round(Blue_Summary_df.iat[2,4],3)} ")
+print(f"An analysis of variance showed that the effect of the number of blue MnMs was significant,F(2,75) = {round(Anova_blue_sum_df.iat[0,3],3)} and p < 0.001. Post hoc analyses using Fisher's LSD indicated that the amount of Blue MnMs in peanut MnMs were significantly higher (M = {Blue_Summary_df.iat[1,2]}, SD =  {round(Blue_Summary_df.iat[1,4],3)})  compared to  Regular MnMs (M = {Blue_Summary_df.iat[0,2]}, SD = {round(Blue_Summary_df.iat[0,4],3)}) and  Peanut Butter(M = {Blue_Summary_df.iat[2,2]}, SD ={round(Blue_Summary_df.iat[2,4],3)} ")
 
-
+# Bar Graphs with standard deviation error lines 
 categories = ['Regular',"Peanut","PB"]
 num_means = [Num_Reg_mean,Num_Peanut_mean,Num_PB_mean]
 num_dev =  [Num_Reg_dev/2,Num_Peanut_dev/2,Num_PB_dev/2]
