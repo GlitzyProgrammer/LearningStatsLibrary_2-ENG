@@ -134,8 +134,6 @@ BlueRegularvsPeanut,BlueRegularvsPB,BluePeanutvsPB):
 df = pd.read_excel(r"C:\Users\ljwil\Desktop\Intro STATS\Project Stats 2\Chapter 13\Practice Portfolio 13 Data-3.xlsx",sheet_name="ANOVA",header=1)
 # Setting header to 1 as keeping it as it was made itterating impossible
 # Also seeting appart the two tables in the dataframe into 2 other data frames will make programing this easier
-#print(df)
-#print("\n")
 #print("Data Fame 'Split' into two different ones\n")
 Number_of_MnMs = {
     "Regular": [],
@@ -445,13 +443,6 @@ print(Numb_Anova_table)
 print("\n")
 print(f"An analysis of variance showed that the effect of type of MnM was significant,F(2,75) = {round(Anova_num_sum_df.iat[0,3],2)} and p < 0.001. Post hoc analyses using Fisher's LSD indicated that the number of peanut MnMs was significantly lower (M = {Number_Summary_df.iat[1,2]}, SD = {round(Number_Summary_df.iat[1,4],3)} and penut butter (M = {Number_Summary_df.iat[2,2]}), SD = {round(Number_Summary_df.iat[2,4],3)})\n") 
 f_statistic, p_value = f_oneway(Num_Reg, Num_Peanut, Num_PB)
-#print(f"I got the p values two different wais")
-#print(p_value)
-#print("\n")
-#print(Anova_Number_Summary['Between Groups'][4])
-#print("\n")
-
-#print(f"The orginal F statstic I got was {f_statistic} but for the sake of matching data from class\nI will round up to 7 decmial places as done here {round(f_statistic,7)}\n")
 f_stat_7d = round(f_statistic,7)
 
 
@@ -470,34 +461,6 @@ print(f"An analysis of variance showed that the effect of the number of blue mnm
 #print(Number_Summary)
 #print("\n")
 #print(Blue_Summary)
-
-
-
-
-
-
-#sstr = len(Num_Reg) * (Num_Reg.mean() - mean_within_group)**2 +  len(Num_Peanut) * (Num_Peanut.mean() - mean_within_group)**2 + len(Num_PB) * (Num_PB.mean() -mean_within_group)**2
-#print(sstr)
-
-#ssw =  
-
-#print(sse_group1+sse_group2+sse_group3)
-
-
-
-
-#print(denom_1)
-#print(t_value)
-#print(p_value)   
-
-#mse_within_groups = ssw / dfw
-#print(mse_within_groups 
-#4.376666666666667
-
-    
-
-#for index, row in test.iterrows():
- #   print(f"Index: {index}, num: {row['numerator']}, denom: {row['denominator']}, t_value: {row['t_value']}, Significange {row['Yes/No']}")
 
 categories = ['Regular',"Peanut","PB"]
 num_means = [Num_Reg_mean,Num_Peanut_mean,Num_PB_mean]
