@@ -1,5 +1,5 @@
 # Data-and-Statstical-Packages
-This is a collection of data packages I utilized for my Introduction to Statistics Class all using Python Libraries such as Numpy, Matplotlib, Scipy, Pandas, and Seaborn.
+These are a collection of files I made while taking the Introduction to Statistics Class and I replicated what I did in class using Python Libraries such as Numpy, Matplotlib, Scipy, Pandas, and Seaborn.
 
 
 
