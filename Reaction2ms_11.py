@@ -89,9 +89,9 @@ out['boxes'][1].set_facecolor('blue')
 #Plots mean 
 plt.plot( 1,before_mean, 'rx', markersize=10)
 plt.plot(2, after_mean,'rx',markersize=10)
+
 # Add vertical lines at each y-axis tick
 y_ticks = plt.yticks()[0]
-# Add vertical lines at each y-axis tick
 for y_tick in y_ticks:
     if y_tick < 0:
         continue
@@ -106,7 +106,7 @@ print("\n")
 if p_value_right < alpha :
    print(f"Rejct null because P {round(p_value_right,4)} < alpha {alpha} is true ")
 else:
-    print(f"Don't rejct null because P {round(p_value_right,4)} < alpha {alpha} is false ")
+    print(f"Don't reject null because P {round(p_value_right,4)} < alpha {alpha} is false ")
 plt.xticks([])
 plt.legend(Labels)
 plt.legend(legend_handles, Labels, handlelength=2, handleheight=2,bbox_to_anchor=(0.23, 1))
