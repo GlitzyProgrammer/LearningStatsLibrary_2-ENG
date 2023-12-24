@@ -44,9 +44,10 @@ manual_chisquare = {
       "f_ij-e_ij":[],
       "(f_ij-e_ij)^2":[],
       "(f_ij-e_ij)^2/e_ij":[]
-
 }
 
+#This takes the  information in L1 and L2 an populates the dictionary manual_chisquare
+#This also pulls from the expected and observed contingency tables to make the caluations to build up to the Chi-Square value
 for i in L1:
     for j in L2:
         manual_chisquare['Winter Attitudes'].append(i)
@@ -67,6 +68,7 @@ man_chi = pd.DataFrame(manual_chisquare)
 print("This is the table used for Manual Chi Caluations\n")
 print(man_chi)
 
+#This totals up the values from the man_chi data frame to get the chi_square value and the total observed and expected
 chi_square_value = 0 
 total_expected = 0
 total_observed = 0 
@@ -76,14 +78,17 @@ for i in manual_chisquare["(f_ij-e_ij)^2/e_ij"]:
 for i in manual_chisquare["Expected Frequencey, e_ij"]:
     total_expected += i
 print("Total Expeceted", math.ceil(total_expected))
+
 for i in manual_chisquare['Observed Frequency, f_ij']:
     total_observed += i
 print("Total Observed", total_observed)
 
 print("\n")
 
+
 chi_square_value = round(chi_square_value,7 )
 print("This is the manually calulated chi_square for 7 signifcant digits",chi_square_value,"\n")
+
 chi2_stat, p_value = chisquare(f_obs=observed_chisquare_use, f_exp=expected_contingency_df)
 print("Chi squre value using python and p value")
 p_value = 1 - chi2.cdf(chi_square_value, 2)  #2 represents the number of categories - 1
@@ -112,11 +117,13 @@ p3_bar = observed_contingency.loc['Hate','After']/ observed_contingency.loc['Hat
 print(f"This is the p-bar for people that hate winter and think that christmas season should start after Thanksgiving:\n{p3_bar}")
 
 print("\n")
+
 pair_wise= {
     "ABS |pi_bar-pj_bar|": [],
      "CV_ij":[],
      "Null Hypothesis":[np.nan,np.nan,np.nan]
 }
+
 critical_value = round(chi2.ppf(0.95, 2),9)   #use for CV_ij
 print(f"Using 0.95 as the probability and setting degrees of freedom to 2 to calulate the critical value we find it to be\n{critical_value} with in 7 signficant digits")
 print("\n")
@@ -140,7 +147,7 @@ p1vp3 = round(p1+p3,7)
 p2vp3 = round(p2+p3,7)
 
 
-# The Critial Values for each of the pair-wise comparisions 
+# The Critical Values for each of the pair-wise comparisons 
 Cv_1 =  round(math.sqrt(critical_value) * math.sqrt(p1vp2),9)
 Cv_2 =  round(math.sqrt(critical_value) * math.sqrt(p1vp3),9)
 Cv_3 = round(math.sqrt(critical_value) * math.sqrt(p2vp3),9)
@@ -158,8 +165,9 @@ print(p_wise)
 
 
 
-#This algorithm is testing wither to reject the Null Hypothesis       
+#This algorithm is testing whether to reject the Null Hypothesis   and puts it at the location in the dataframe assoicated
 count = 0 
+#It iterates through the index of the p_wise dataframe and pulls from the rows "ABS |pi_bar-pj_bar|" and "CV_ij"
 for index, row in p_wise.iterrows():
     if row["ABS |pi_bar-pj_bar|"] > row["CV_ij"]:
         p_wise.at[index, "Null Hypothesis"] = 'Reject Null'
