@@ -9,3 +9,7 @@ Portfolio 11: F-Test Two-Sample for Variances, Confidence Interval
 Portfolio 12: Chi-Square Independence Test, Marascuilo Pairwise Comparison Procedure
 
 Portfolio 13: ANOVA and Regression
+
+
+I will also translate my notes into French eventually :)
+
